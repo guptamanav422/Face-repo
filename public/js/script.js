@@ -1,5 +1,11 @@
 const video = document.getElementById('videoInput')
+let faces = new Set();
+let users = ['sanjay' , 'shubham']
+let content;
+// var json2xls = require('json2xls');
+// import json2xls from '../../node_modules/json2xls';
 
+const labels = ['Sanjay', 'Shubham']
 Promise.all([
     faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
     faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
@@ -51,7 +57,22 @@ async function recognizeFaces() {
             results.forEach((result, i) => {
                 const box = resizedDetections[i].detection.box
                 const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString() })
-                console.log(result.toString());
+                // console.log(result.toString());
+                // faces.add(result.toString());
+                let f = result.toString();
+                const myArray = f.split(" ");
+                
+                if(myArray[0]=='Sanjay'){
+                    window.location.href= 'http://localhost:3000/course.html'
+                }
+                // if (myArray[0] != 'unknown') {
+                //     // console.log(faces);
+                //     faces.add(myArray[0]);
+                //     console.log(faces);
+                //     content =JSON.stringify([...faces]);
+                    
+                    
+                // }
                 drawBox.draw(canvas)
             })
         }, 100)
@@ -61,9 +82,17 @@ async function recognizeFaces() {
     })
 }
 
+// const myTimeout = setTimeout(myStopFunction, 15000);
+
+// function myStopFunction() {
+
+// var xls = json2xls(content);
+
+// fs.writeFileSync('data.xlsx', xls, 'binary');
+// }
 
 function loadLabeledImages() {
-    const labels = ['Sanjay', 'Shubham']
+
     // const labels = ['Prashant Kumar'] // for WebCam
     return Promise.all(
         labels.map(async (label) => {
@@ -79,3 +108,6 @@ function loadLabeledImages() {
         })
     )
 }
+
+
+export default content;
